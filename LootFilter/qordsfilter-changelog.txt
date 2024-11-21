@@ -1,6 +1,12 @@
-Qords filter
+Sharky's -> Qords filter
 All changes to Qords filter will be tracked here
 Check out the filter file itself for more verbose FilterLevel descriptions
+
+#####################################
+New Fork
+Removed crafting bases entirely
+Enabled Ral rune across all filter levels
+Enabled Low runes to be visible until Uber Strict filter level
 
 #####################################
 Update 11-18
