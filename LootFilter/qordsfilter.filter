@@ -1,4 +1,8 @@
-//Filter configs and details
+// Filter configs and details
+// Sharky's fork of Qord's filter.  Leaving all his comments in, as he deserves the credit for doing most of the hard lifting
+// I just changed the grouping of what is hidden where, but loved the style of his filter
+//
+//
 // Qord's Filter
 // Changelog can be found here: https://github.com/qordwasalreadytaken/PoD-Things/blob/main/LootFilter/qordsfilter-changelog.txt
 // Credits and thanks to Krysard, LivEisJeebus, Kitten, Belli, BetweenWalls, Darain, Mag, Mackanmusic, Steve/Beavis, Necrolis 
@@ -21,8 +25,8 @@
 // Duplicate sound macro lines with global vs local sounds, need to address
 //
 //
-Attribute[Author]: Qord 
-Attribute[Name]: QordsFilter
+Attribute[Author]: Sharky 
+Attribute[Name]: Sharky's Filter
 Attribute[Version]: 11.18
 Attribute[Date]: 18 Nov
 Attribute[FilterLevels]: This is a description of the different filterlevels
@@ -32,20 +36,20 @@ Option[OptionQordsocool]: True
 Option[IgnoreMissingSounds]: True
 
 //Rename filterlevel
-// Filterlevel 1
-FilterLevel[1]: Loosey goosey
+// Filterlevel 1, mostly just basic filtering and formatting
+FilterLevel[1]: Loose
 // Filterlevel 2 hides items in the utility section, id scrolls, some blues, lower tier gems
-FilterLevel[2]: Utility
+FilterLevel[2]: Semi Strict
 // Filterlevel 3 hides the above, as well as low runes, large charms, hides some bases (spirit, hoto, cta), hides class specific magic
-FilterLevel[3]: No low runes
+FilterLevel[3]: Strict
 // Filterlevel 4 hides the above, health/mana pots, "probly garbage" labeled items, large charms, hides the "changed in newest patch" lines, more runeword bases
-FilterLevel[4]: A little more strict
+FilterLevel[4]: Very Strict
 // Filterlevel 5 hides the above, as well as lower set and unique items
-FilterLevel[5]: No extra floor junk
+FilterLevel[5]: Uber Strict
 //FilterLevel[6]: Max filterlevel name length
 
 //Set the filter level and notification level of filter on load
-Option[DefaultFilterLevel]: Utility
+Option[DefaultFilterLevel]: Semi Strict
 Option[DefaultNotifyLevel]: LOW
 
 // Define filter sounds
@@ -133,7 +137,7 @@ ItemDisplay[GOLD>5000 CLVL>79]: %NAME%
 
 //Pots
 ItemDisplay[rvl]: %PURPLE%R %WHITE%70% //%NOTIFYSOUND(corb3)%
-ItemDisplay[rvs]: %PURPLE%r %WHITE%35%
+//s ItemDisplay[rvs]: %PURPLE%r %WHITE%35%
 //ItemDisplay["Super Healing Potion"]: %RED%%NAME% %MAPICON(4,5)% %BORDER(1,33)% %BGCOLOR(4)% 
 ItemDisplay["Super Healing Potion" AND CLVL>85 AND CHARSTAT(6)<400]: %RED%! Drink a pot ! %WHITE% Hp
 ItemDisplay["Super Healing Potion"]:  %RED%!%WHITE%Hp
@@ -205,12 +209,12 @@ ItemDisplay[ma4 OR ma8]: %NAME% %!mapmacro!% <<highprionotify>>
 ItemDisplay[MAP]: %GOLD%%NAME% %WHITE%[T%MAPTIER%] %BLUE%(%ILVL%) [%CODE%] <<highprionotify>>
 
 //Runes
-//ALWAYS show me ort
-ItemDisplay[r09]:  %!runename!%
+//ALWAYS show me ort and ral for crafting
+ItemDisplay[r08 OR r09]:  %!runename!% //s Added Ral for crafting
 //Hide low runes (except ort) in filterlevel 3
 //ItemDisplay[((RUNETIER<18) AND (FILTERLVL=1 OR FILTERLVL=2 OR FILTERLVL=4))]:  %!runename!%
 // added the line below just to use <= (less than or equal to) just because/for science
-ItemDisplay[((RUNETIER<=17) AND (FILTERLVL=1 OR FILTERLVL=2 OR FILTERLVL=4))]:  %!runename!% %MAPICON(35)%
+ItemDisplay[((RUNETIER<=17) AND FILTERLVL=5)]:  %!runename!% %MAPICON(35)% //s Changed this line to only hide low runes at uber strict
 ItemDisplay[r18 OR r19 OR r20 OR r21 OR r22]:%NL%%GOLD%%!runename!% %NL%%NL% <<rune>>
 ItemDisplay[r23 OR r24 OR r25]: %NL%%GOLD% 	 %!runename!% 	%NL%%NL% <<rune>>
 ItemDisplay[r26 OR r27 OR r32]: %NL%%GOLD%	   %!runename!% 	 %NL%%NL% <<rune>>
@@ -253,38 +257,38 @@ ItemDisplay[jew RARE !ID]: %TAN%»» %YELLOW%%NAME%%TAN% «« <<rare>> // <<lowp
 ItemDisplay[jew (RARE OR MAG) ID]: %NAME%
 
 //Craftables
-ItemDisplay[(7wa) MAG]: %NL% %NAME% %RED%[ort] %GRAY%[%ILVL%]%NL% <:notify: MapIcon = 66, NotificationColor = RED> {%GRAY%Ort Rune + Perfect Ruby + This Magical Item + Jewel = Crafted Blood Zerker Axe%NL%%GRAY%Horadric Cube Craft Recipe}
+//ItemDisplay[(7wa) MAG]: %NL% %NAME% %RED%[ort] %GRAY%[%ILVL%]%NL% <:notify: MapIcon = 66, NotificationColor = RED> {%GRAY%Ort Rune + Perfect Ruby + This Magical Item + Jewel = Crafted Blood Zerker Axe%NL%%GRAY%Horadric Cube Craft Recipe}
 //ItemDisplay[(mpi) MAG]: %NL% %NAME% %RED%[ort] %GRAY%[%ILVL%]%NL% <:notify: MapIcon = 66, NotificationColor = RED> {%GRAY%Ort Rune + Perfect Ruby + This Magical Item + Jewel = Crafted Blood Pickaxe%NL%%GRAY%Horadric Cube Craft Recipe}
-ItemDisplay[(mpi) MAG FILTERLVL<3]: %NL% %NAME% %RED%[ort] %GRAY%[%ILVL%] {%GRAY%Ort Rune + Perfect Ruby + This Magical Item + Jewel = Crafted Blood Pickaxe%NL%%GRAY%Horadric Cube Craft Recipe}
-ItemDisplay[(ARMOR OR WEAPON OR rin OR amu) !(NMAG OR MAG OR RARE OR SET OR UNI)]: %NAME%
-ItemDisplay[(uvg OR xvg) MAG]: %NAME% %RED%[nef] %GRAY%[%ILVL%]{%GRAY%Nef Rune + Perfect Ruby + This Magical Item + Jewel = Crafted Blood Gloves%NL%%GRAY%Horadric Cube Craft Recipe}
-ItemDisplay[xtb MAG]: %NAME% %RED%[eth] %GRAY%[%ILVL%]{%GRAY%Eth Rune + Perfect Ruby + This Magical Item + Jewel = Crafted Blood Boots%NL%%GRAY%Horadric Cube Craft Recipe}
-ItemDisplay[(xlg OR ulg) MAG]: %NAME% %PURPLE%[ort] %GRAY%[%ILVL%]{%GRAY%Ort Rune + Perfect Amethyst + This Magical Item + Jewel = Crafted Caster Gloves%NL%%GRAY%Horadric Cube Craft Recipe}
-ItemDisplay[(uvc OR zvb) MAG]: %NAME% %PURPLE%[ith] %GRAY%[%ILVL%]{%GRAY%Ith Rune + Perfect Amethyst + This Magical Item + Jewel = Crafted Caster Belt%NL%%GRAY%Horadric Cube Craft Recipe}
-ItemDisplay[(umg OR xmg) MAG]: %NAME% %WHITE%[%BLUE%ort%WHITE%] %GRAY%[%ILVL%]{%GRAY%Ort Rune + Perfect Sapphire + This Magical Item + Jewel = Crafted Hit Power Gloves%NL%%GRAY%Horadric Cube Craft Recipe}
-ItemDisplay[uit MAG]: %NAME% %GREEN%[nef] %GRAY%[%ILVL%]{%GRAY%Nef Rune + Perfect Emerald + This Magical Item + Jewel = Crafted Safety Shield%NL%%GRAY%Horadric Cube Craft Recipe}
-ItemDisplay[(hbt OR xhb) MAG]: %NAME% %GREEN%[ort] %GRAY%[%ILVL%]{%GRAY%Ort Rune + Perfect Emerald + This Magical Item + Jewel = Crafted Safety Boots%NL%%GRAY%Horadric Cube Craft Recipe}
-ItemDisplay[(ltp OR xtp OR utp) MAG]: %NAME% %PURPLE%[tal] %GRAY%[%ILVL%]{%GRAY%Tal Rune + Perfect Amethyst + This Magical Item + Jewel = Crafted Caster Armor%NL%%GRAY%Horadric Cube Craft Recipe}
-ItemDisplay[(sml OR xml OR uml) MAG]: %NAME% %PURPLE%[eth] %GRAY%[%ILVL%]{%GRAY%Eth Rune + Perfect Amethyst + This Magical Item + Jewel = Crafted Caster Shield%NL%%GRAY%Horadric Cube Craft Recipe}
-ItemDisplay[(CL6 OR WP11) MAG]: %NAME% %PURPLE%[tir] %GRAY%[%ILVL%]{%GRAY%Tir Rune + Perfect Amethyst + This Magical Item + Jewel = Crafted Caster Weapon%NL%%GRAY%Horadric Cube Craft Recipe}
-//Craft catch-all, always show crafterd items
+//ItemDisplay[(mpi) MAG FILTERLVL<3]: %NL% %NAME% %RED%[ort] %GRAY%[%ILVL%] {%GRAY%Ort Rune + Perfect Ruby + This Magical Item + Jewel = Crafted Blood Pickaxe%NL%%GRAY%Horadric Cube Craft Recipe}
+//ItemDisplay[(ARMOR OR WEAPON OR rin OR amu) !(NMAG OR MAG OR RARE OR SET OR UNI)]: %NAME%
+//ItemDisplay[(uvg OR xvg) MAG]: %NAME% %RED%[nef] %GRAY%[%ILVL%]{%GRAY%Nef Rune + Perfect Ruby + This Magical Item + Jewel = Crafted Blood Gloves%NL%%GRAY%Horadric Cube Craft Recipe}
+//ItemDisplay[xtb MAG]: %NAME% %RED%[eth] %GRAY%[%ILVL%]{%GRAY%Eth Rune + Perfect Ruby + This Magical Item + Jewel = Crafted Blood Boots%NL%%GRAY%Horadric Cube Craft Recipe}
+//ItemDisplay[(xlg OR ulg) MAG]: %NAME% %PURPLE%[ort] %GRAY%[%ILVL%]{%GRAY%Ort Rune + Perfect Amethyst + This Magical Item + Jewel = Crafted Caster Gloves%NL%%GRAY%Horadric Cube Craft Recipe}
+//ItemDisplay[(uvc OR zvb) MAG]: %NAME% %PURPLE%[ith] %GRAY%[%ILVL%]{%GRAY%Ith Rune + Perfect Amethyst + This Magical Item + Jewel = Crafted Caster Belt%NL%%GRAY%Horadric Cube Craft Recipe}
+//ItemDisplay[(umg OR xmg) MAG]: %NAME% %WHITE%[%BLUE%ort%WHITE%] %GRAY%[%ILVL%]{%GRAY%Ort Rune + Perfect Sapphire + This Magical Item + Jewel = Crafted Hit Power Gloves%NL%%GRAY%Horadric Cube Craft Recipe}
+//ItemDisplay[uit MAG]: %NAME% %GREEN%[nef] %GRAY%[%ILVL%]{%GRAY%Nef Rune + Perfect Emerald + This Magical Item + Jewel = Crafted Safety Shield%NL%%GRAY%Horadric Cube Craft Recipe}
+//ItemDisplay[(hbt OR xhb) MAG]: %NAME% %GREEN%[ort] %GRAY%[%ILVL%]{%GRAY%Ort Rune + Perfect Emerald + This Magical Item + Jewel = Crafted Safety Boots%NL%%GRAY%Horadric Cube Craft Recipe}
+//ItemDisplay[(ltp OR xtp OR utp) MAG]: %NAME% %PURPLE%[tal] %GRAY%[%ILVL%]{%GRAY%Tal Rune + Perfect Amethyst + This Magical Item + Jewel = Crafted Caster Armor%NL%%GRAY%Horadric Cube Craft Recipe}
+//ItemDisplay[(sml OR xml OR uml) MAG]: %NAME% %PURPLE%[eth] %GRAY%[%ILVL%]{%GRAY%Eth Rune + Perfect Amethyst + This Magical Item + Jewel = Crafted Caster Shield%NL%%GRAY%Horadric Cube Craft Recipe}
+//ItemDisplay[(CL6 OR WP11) MAG]: %NAME% %PURPLE%[tir] %GRAY%[%ILVL%]{%GRAY%Tir Rune + Perfect Amethyst + This Magical Item + Jewel = Crafted Caster Weapon%NL%%GRAY%Horadric Cube Craft Recipe}
+//Craft catch-all, always show crafted items
 ItemDisplay[CRAFT !SOCK=0]: %NAME% %!tansocks!% %CONTINUE%
 ItemDisplay[CRAFT]: %NAME% %CONTINUE%
 // Magic Rings and amulets
-ItemDisplay[(rin OR amu) MAG ILVL>90]: %NAME% %WHITE%[%ILVL%] %CONTINUE%
-ItemDisplay[(rin OR amu) MAG FILTERLVL=1]: %NAME% %GRAY%[%ILVL%] %CONTINUE%
+//ItemDisplay[(rin OR amu) MAG ILVL>90]: %NAME% %WHITE%[%ILVL%] %CONTINUE%
+//ItemDisplay[(rin OR amu) MAG FILTERLVL=1]: %NAME% %GRAY%[%ILVL%] %CONTINUE%
 // Magic arrows and bolts
-ItemDisplay[(aq2 OR cq2) MAG ILVL>90]: %NAME% %WHITE%[%ILVL%] %CONTINUE%
-ItemDisplay[(aq2 OR cq2) MAG FILTERLVL<3]: %NAME% %GRAY%[%ILVL%] %CONTINUE%
+//ItemDisplay[(aq2 OR cq2) MAG ILVL>90]: %NAME% %WHITE%[%ILVL%] %CONTINUE%
+//ItemDisplay[(aq2 OR cq2) MAG FILTERLVL<3]: %NAME% %GRAY%[%ILVL%] %CONTINUE%
 
 //Rares
 //Rare military picks
-ItemDisplay[mpi RARE ILVL>60]: %NL%%NAME%%NL% <<rare>>
-ItemDisplay[cq2 RARE ILVL>60]: %NL%%NAME%%NL% <<rare>>
+//ItemDisplay[mpi RARE ILVL>60]: %NL%%NAME%%NL% <<rare>>
+//ItemDisplay[cq2 RARE ILVL>60]: %NL%%NAME%%NL% <<rare>>
 //Rare Gloves, Belts and Boots
-ItemDisplay[(EQ4 OR EQ5 OR EQ6 OR mpi) ETH RARE]: %GRAY%ETH %YELLOW%%NAME% <<rare>>  
-ItemDisplay[(EQ4 OR EQ5 OR EQ6 OR mpi) RARE !ID]: %NL%%NAME%%NL% %NL%<<rare>> 
-ItemDisplay[(EQ4 OR EQ5 OR EQ6 OR mpi) RARE]: %NAME% <<rare>> %CONTINUE%
+//ItemDisplay[(EQ4 OR EQ5 OR EQ6 OR mpi) ETH RARE]: %GRAY%ETH %YELLOW%%NAME% <<rare>>  
+//ItemDisplay[(EQ4 OR EQ5 OR EQ6 OR mpi) RARE !ID]: %NL%%NAME%%NL% %NL%<<rare>> 
+//ItemDisplay[(EQ4 OR EQ5 OR EQ6 OR mpi) RARE]: %NAME% <<rare>> %CONTINUE%
 
 //Circlets
 ItemDisplay[EQ7 MAG ETH]: %GRAY%ETH %BLUE%%NAME% 
@@ -383,11 +387,11 @@ ItemDisplay[NMAG (SOCK=0 OR SOCK=3) CL6]: %NAME% %CONTINUE%
 ItemDisplay[NMAG (SK62>1 AND SK64>1) (SOCK=0 OR SOCK=3) CL6]: %SAGE%Hydra/Orb Orb %!qspecial!% %!stripedsocks!% <<qspecials>>
 ItemDisplay[NMAG (SK40>2 AND SK52>2) (SOCK=0 OR SOCK=3) CL6]: %NAME% %ORANGE%GG +3 Enflame +3 Frigerate Pick me! %!stripedsocks!%
 //Cold with mastery
-ItemDisplay[NMAG (SK44>1 AND SK65>1) (SOCK=0 OR SOCK=3) CL6]: %ORANGE%Frost Nova Cold Mastery Orb %PURPLE%[%SOCKETS%] <:orbs: BorderColor = 151>
-ItemDisplay[NMAG (SK64>1 AND SK65>1) (SOCK=0 OR SOCK=3) CL6]: %ORANGE%Orb Cold Mastery Orb %BLUE%(%SOCKETS%) <:orbs: BorderColor = 151>
+//ItemDisplay[NMAG (SK44>1 AND SK65>1) (SOCK=0 OR SOCK=3) CL6]: %ORANGE%Frost Nova Cold Mastery Orb %PURPLE%[%SOCKETS%] <:orbs: BorderColor = 151>
+//ItemDisplay[NMAG (SK64>1 AND SK65>1) (SOCK=0 OR SOCK=3) CL6]: %ORANGE%Orb Cold Mastery Orb %BLUE%(%SOCKETS%) <:orbs: BorderColor = 151>
 //Fire with mastery
-ItemDisplay[NMAG (SK46>1 AND SK61>1) (SOCK=0 OR SOCK=3) CL6]: %ORANGE%Immolate Fire Mastery Orb %!stripedsocks!% <:orbs: BorderColor = 10>
-ItemDisplay[NMAG (SK47>1 AND SK61>1) (SOCK=0 OR SOCK=3) CL6]: %ORANGE%Fireball Fire Mastery Orb %!stripedsocks!% <:orbs: BorderColor = 10>
+//ItemDisplay[NMAG (SK46>1 AND SK61>1) (SOCK=0 OR SOCK=3) CL6]: %ORANGE%Immolate Fire Mastery Orb %!stripedsocks!% <:orbs: BorderColor = 10>
+//ItemDisplay[NMAG (SK47>1 AND SK61>1) (SOCK=0 OR SOCK=3) CL6]: %ORANGE%Fireball Fire Mastery Orb %!stripedsocks!% <:orbs: BorderColor = 10>
 ItemDisplay[NMAG (SK62>1 AND SK61>1) (SOCK=0 OR SOCK=3) CL6]: %ORANGE%Hydra Fire Mastery Orb %!stripedsocks!% <:orbs: BorderColor = 10>
 ItemDisplay[NMAG (SK56>1 AND SK61>1) (SOCK=0 OR SOCK=3) CL6]: %ORANGE%Meteor Fire Mastery %NAME%%%!stripedsocks!% <:orbs: BorderColor = 10>
 //Light with mastery
