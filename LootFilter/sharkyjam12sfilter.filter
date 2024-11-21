@@ -215,7 +215,7 @@ ItemDisplay[r08 OR r09]:  %!runename!% //s Added Ral for crafting
 //Hide low runes (except ort) in filterlevel 3
 //ItemDisplay[((RUNETIER<18) AND (FILTERLVL=1 OR FILTERLVL=2 OR FILTERLVL=4))]:  %!runename!%
 // added the line below just to use <= (less than or equal to) just because/for science
-ItemDisplay[((RUNETIER<=17) AND FILTERLVL<5)]:  %!runename!% %MAPICON(35)% //s Changed this line to only hide low runes at uber strict
+ItemDisplay[(RUNETIER<=17) AND FILTERLVL<5)]:  %!runename!% %MAPICON(35)% 
 ItemDisplay[r18 OR r19 OR r20 OR r21 OR r22]:%NL%%GOLD%%!runename!% %NL%%NL% <<rune>>
 ItemDisplay[r23 OR r24 OR r25]: %NL%%GOLD% 	 %!runename!% 	%NL%%NL% <<rune>>
 ItemDisplay[r26 OR r27 OR r32]: %NL%%GOLD%	   %!runename!% 	 %NL%%NL% <<rune>>
